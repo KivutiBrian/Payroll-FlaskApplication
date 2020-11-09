@@ -1,0 +1,257 @@
+{% extends 'base.html' %}
+
+{% block css %}{% endblock %}
+
+{% block title %}view-employees{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid  dashboard-content">
+
+    <div class="row">
+        <div class="col-xl-10">
+            <!-- ============================================================== -->
+            <!-- pageheader -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Employees Records</h2>
+                        <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+                        <div class="page-breadcrumb">
+                            <!-- <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Tables</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Data Tables</li>
+                                </ol>
+                            </nav> -->
+
+                            {% include 'includes/_alert.html' %}
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end pageheader -->
+            <!-- ============================================================== -->
+        </div>
+
+        <div class="row">
+            <!-- ============================================================== -->
+            <!-- data table multiselects  -->
+            <!-- ============================================================== -->
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="card">
+                    <!-- <div class="card-header">
+                        <h5 class="mb-0">Data Tables - Multi item selection </h5>
+                        <p>This example shows DataTables and the Select extension being used with Bootstrap 4 providing the styling.</p>
+                    </div> -->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example3" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Surname</th>
+                                        <th>F.Name</th>
+                                        <th>L.Name</th>
+                                        <th>Email</th>
+                                        <th>PhoneNo</th>
+                                        <th>Department</th>
+                                        <th>Generate payroll</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for each in employees %}
+                                    <tr>
+                                        <td>{{ each.id }}</td>
+                                        <td>{{ each.surname }}</td>
+                                        <td>{{ each.first_name }}</td>
+                                        <td>{{ each.last_name }}</td>
+                                        <td>{{ each.email }}</td>
+                                        <td>{{ each.phone_number }}</td>
+                                        
+                                        <td>{{ each.department.title }}</td>
+                                        <td>
+                                            <!-- go to employees -->
+                                            <a class="btn btn-sm btn-info" href="/employee/{{ each.id }}/generate-payroll"><i class="fas fa-arrow-right"></i></a>
+                                        </td>
+                                        <td>
+                                            <!-- edit -->
+                                            <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#edit{{ each.id }}"><i class="far fa-edit"></i></button>
+
+
+                                            <!-- edit modal -->
+                                            <div class="modal fade" id="edit{{ each.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Edit Record #{{ each.id }}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        
+                                                        <form action="/edit/{{ each.id }}/employees" method="POST">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label for="inputText3">Surname</label>
+                                                                        <input id="inputText3" type="text" name="surname" value="{{ each.surname }}" class="form-control" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label for="inputEmail">First Name</label>
+                                                                        <input id="inputEmail" type="text" name="fname" value="{{ each.first_name }}" required class="form-control">
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label for="inputText4" >Last Name</label>
+                                                                        <input id="inputText4" type="text" name="lname" value="{{ each.last_name }}" class="form-control" required>
+                                                                    </div>
+                                                                </div>
+                            
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputText4" class="col-form-label">Email</label>
+                                                                <input id="inputText4" type="text" name="email" value="{{ each.email }}" class="form-control" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputText4" class="col-form-label">Phone Number</label>
+                                                                <input id="inputText4" type="text" name="phone_number" value="{{ each.phone_number }}" class="form-control" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputText4" class="col-form-label">Salary Group</label>
+                                                                <select name="salary_group" id="" class="form-control" required>
+                                                                    <option selected value="{{ each.salarygroup.id }}">{{ each.salarygroup.title }}</option>
+                                                                    {% for each in sgroups %}
+                                                                        <option value="{{ each.id }}">{{ each.title }}</option>
+                                                                    {% endfor %}
+                            
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputText4" class="col-form-label">Department</label>
+                                                                <select name="department" id="" class="form-control" required aria-placeholder="select department">
+                                                                    <option selected value="{{ each.department.id }}">{{ each.department.title }}</option>
+                                                                    {% for each in departments %}
+                                                                        <option value="{{ each.id }}">{{ each.title }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                            
+                                                            <div class="form-group">
+                                                                <button type="submit" class="btn btn-sm btn-success">Submit</button>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+  
+
+                                        </td>
+                                        <td>
+                                            <!-- delete -->
+                                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete{{ each.id }}"><i class="fas fa-trash"></i></button>
+
+                                            <!-- delete modal -->
+                                            <div class="modal fade" id="delete{{ each.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Delete Record #{{ each.id }}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete this record?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <form action="/delete/{{ each.id }}/employees" method="POST">
+                                                        <button type="submit" class="btn btn-success">Confirm</button>
+                                                    </form>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                {% endfor %}
+
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end data table multiselects  -->
+            <!-- ============================================================== -->
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- sidenavbar -->
+        <!-- ============================================================== -->
+        <!-- <div class="col-xl-2 col-lg-2 col-md-6 col-sm-12 col-12">
+            <div class="sidebar-nav-fixed">
+                <ul class="list-unstyled">
+                    <li><a href="/add-employee" >Add Employee Form</a></li>
+                    <li><a href="/view-employees" class="active">View Employees</a></li>
+                </ul>
+            </div>
+        </div> -->
+        <!-- ============================================================== -->
+        <!-- end sidenavbar -->
+        <!-- ============================================================== -->
+
+    </div>
+
+
+    
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="/static/assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+<script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+<script src="/static/assets/vendor/slimscroll/jquery.slimscroll.js"></script>
+<script src="/static/assets/vendor/multi-select/js/jquery.multi-select.js"></script>
+<script src="/static/assets/libs/js/main-js.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="/static/assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="/static/assets/vendor/datatables/js/buttons.bootstrap4.min.js"></script>
+<script src="/static/assets/vendor/datatables/js/data-table.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+
+
+{% endblock %}

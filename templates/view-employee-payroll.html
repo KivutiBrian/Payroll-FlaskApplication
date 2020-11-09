@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+
+{% block css %}
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+
+
+{% endblock %}
+
+{% block title %} Generate payroll {% endblock %}
+
+{% block content %}
+
+<div class="container-fluid  dashboard-content">
+    <div class="row">
+
+
+        <div class="col-xl-10">
+            <!-- ============================================================== -->
+            <!-- pageheader -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Salary Details for Employee #{{ employee.id }}</h2>
+                        <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+                        <div class="page-breadcrumb">
+                            <!-- <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Tables</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Data Tables</li>
+                                </ol>
+                            </nav> -->
+
+                            {% include 'includes/_alert.html' %}
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end pageheader -->
+            <!-- ============================================================== -->
+        </div>
+
+
+
+        <!-- ============================================================== -->
+        <!-- validation form -->
+        <!-- ============================================================== -->
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <h5 class="card-header">Employee Details</h5>
+                <div class="card-body">
+                    <form class="needs-validation" novalidate>
+                       <div class="row">
+                           <div class="col">
+                               <div class="form-group">
+                                   <label for="">Surname</label>
+                                   <input type="text" name="" value="{{ employee.surname }}" id="" class="form-control" disabled>
+                               </div>
+                           </div>
+                           <div class="col">
+                               <div class="form-group">
+                                   <label for="">First Name</label>
+                                   <input type="text" name="" value="{{ employee.first_name }}" id="" class="form-control" disabled>
+                               </div>
+                           </div>
+                           <div class="col">
+                               <div class="form-group">
+                                   <label for="">Last Name</label>
+                                   <input type="text" name="" value="{{ employee.last_name }}" id="" class="form-control" disabled>
+                               </div>
+                           </div>
+                           <div class="col">
+                               <div class="form-group">
+                                   <label for="">Email</label>
+                                   <input type="text" name="" value="{{employee.email}}" id="" class="form-control" disabled>
+                               </div>
+                           </div>
+                           <div class="col">
+                               <div class="form-group">
+                                   <label for="">Phone NO.</label>
+                                   <input type="text" name="" value="{{employee.phone_number}}" id="" class="form-control" disabled>
+                               </div>
+                           </div>
+                       </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end validation form -->
+        <!-- ============================================================== -->
+
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <h5 class="card-header">Salary Details</h5>
+                <div class="card-body">
+                    <form action="/employee/{{ employee.id }}/generate-payroll" method="POST">
+                       <div class="row">
+                           <div class="col">
+                               <div class="form-group">
+                                   <label for="">Basic Salary</label>
+                                   <input type="number" class="form-control" name="bs" readonly value="{{ employee.salarygroup.basic_salary }}" >
+                               </div>
+                           </div>
+                           <div class="col">
+                               <div class="form-group">
+                                   <label for="">House Rent Allowance</label>
+                                   <input type="number" class="form-control" name="hra" readonly value="{{ employee.salarygroup.house_rent_allowance }}" >
+                               </div>
+                           </div>
+                           <div class="col">
+                               <div class="form-group">
+                                   <label for="">Medical Allowance</label>
+                                   <input type="number" class="form-control" name="ma" readonly value="{{ employee.salarygroup.medical_allowance }}" >
+                               </div>
+                           </div>
+                       </div>
+                       <div class="row">
+                           <div class="col-4">
+                               <div class="form-group">
+                                   <label for="">Select period</label>
+                                   <input type="month" name="period" class="form-control" required>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-sm btn-success rounded">Generate Salary</button>
+                        </div>
+                       </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <h5 class="card-header">Salary History</h5>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example3" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Period</th>
+                                    <th>Basic-salary</th>
+                                    <th>Benefits</th>
+                                    <th>Gross Salary</th>
+                                    <th>NSSF Contribution</th>
+                                    <th>Taxable-income</th>
+                                    <th>PAYE</th>
+                                    <th>Personal-relief</th>
+                                    <th>Tax-payable</th>
+                                    <th>NHIF Contribution</th>
+                                    <th>Net-salary</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for each in employee.salaries %}
+                                <tr>
+                                    <td>{{ each.id }}</td>
+                                    <td>{{ each.period }}</td>
+                                    <td>{{ each.basic_salary }}</td>
+                                    <td>{{ each.benefits }}</td>
+                                    <td>{{ each.basic_salary+each.benefits }}</td>
+                                    <td>{{ each.nssf }}</td>
+                                    <td>{{ each.taxable_income }}</td>
+                                    <td>{{ each.payee }}</td>
+                                    <td>{{ each.personal_relief }}</td>
+                                    <td>{{ each.tax_payable }}</td>
+                                    <td>{{ each.nhif }}</td>
+                                    <td>{{ each.net_salary }}</td>
+                                </tr>
+                            
+                            {% endfor %}
+                            
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="/static/assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+<script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+<script src="/static/assets/vendor/slimscroll/jquery.slimscroll.js"></script>
+<script src="/static/assets/vendor/multi-select/js/jquery.multi-select.js"></script>
+<script src="/static/assets/libs/js/main-js.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="/static/assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="/static/assets/vendor/datatables/js/buttons.bootstrap4.min.js"></script>
+<script src="/static/assets/vendor/datatables/js/data-table.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+
+
+{% endblock %}

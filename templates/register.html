@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+ 
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link href="/static/assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/assets/libs/css/style.css">
+    <link rel="stylesheet" href="/static/assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <style>
+    html,
+    body {
+        height: 100%;
+    }
+
+    body {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- login page  -->
+    <!-- ============================================================== -->
+    <div class="splash-container">
+        <div class="card ">
+            <div class="card-header text-center">
+                <p class="font-weight-bold">REGISTER </p>
+            </div>
+            <div class="card-body">
+                
+                {% include 'includes/_alert.html' %}
+
+                <form action="/register" method="POST">
+
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-lg" autocomplete="off" placeholder="first name"  name="fname" >
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-lg" autocomplete="off" placeholder="last name"  name="lname" >
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control form-control-lg" autocomplete="off" placeholder="email"  name="email" >
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control form-control-lg" placeholder="password"  name="password" >
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <input class="form-control form-control-lg" id="username" name="email" type="text" placeholder="email" required autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control form-control-lg" id="password" name="password" type="password" required placeholder="Password">
+                    </div> -->
+                    
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+  
+    <!-- ============================================================== -->
+    <!-- end login page  -->
+    <!-- ============================================================== -->
+    <!-- Optional JavaScript -->
+    <script src="/static/assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+</body>
+ 
+</html>

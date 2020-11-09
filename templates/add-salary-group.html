@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block css %}{% endblock %}
+
+{% block title %}add-salary-group{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid dashboard-content">
+    <div class="row">
+        <div class="col-xl-10">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header" id="top">
+                        <h2 class="pageheader-title">Add Salary Group </h2>
+                        <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+                        <div class="page-breadcrumb">
+                            <!-- <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Forms</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Form Elements</li>
+                                </ol>
+                            </nav> -->
+
+                            {% include 'includes/_alert.html' %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end pageheader  -->
+            <!-- ============================================================== -->
+            
+            <!-- ============================================================== -->
+            <!-- basic form  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <!-- <div class="section-block" id="basicform">
+                        <h3 class="section-title">Basic Form Elements</h3>
+                        <p>Use custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.</p>
+                    </div> -->
+                    <div class="card">
+                        <h5 class="card-header">Add Salary Group Form</h5>
+                        <div class="card-body">
+                            <form action="/add-salary-groups" method="POST">
+                                <div class="form-group">
+                                    <label for="inputText3" class="col-form-label">Title</label>
+                                    <input id="inputText3" type="text" name="title" class="form-control" autocomplete="off" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail">Basic Salary</label>
+                                    <input id="inputEmail" type="number" name="basic_salary" required autocomplete="off" class="form-control">
+                                    
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputText4" class="col-form-label">House Rent Allowance</label>
+                                    <input id="inputText4" type="number" name="hra" class="form-control" autocomplete="off" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputText4" class="col-form-label">Medical Allowance</label>
+                                    <input id="inputText4" type="number" name="ma" autocomplete="off" class="form-control" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-sm btn-success">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end basic form  -->
+        </div>
+
+        
+        <!-- ============================================================== -->
+        <!-- sidenavbar -->
+        <!-- ============================================================== -->
+        <div class="col-xl-2 col-lg-2 col-md-6 col-sm-12 col-12">
+            <div class="sidebar-nav-fixed">
+                <ul class="list-unstyled">
+                    <li><a href="/add-salary-groups" class="active">Salary Group Form</a></li>
+                    <li><a href="/view-salary-groups">View Salary Groups</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end sidenavbar -->
+        <!-- ============================================================== -->
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}{% endblock %}

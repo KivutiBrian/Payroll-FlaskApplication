@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="ecommerce-widget">
+    <div class="container-fluid dashboard-content ">
+        <div class="row">
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-muted">Employees</h5>
+                        <div class="metric-value d-inline-block">
+                            <h1 class="mb-1">{{ emps }}</h1>
+                        </div>
+                        
+                    </div>
+                    <!-- <div id="sparkline-revenue"></div> -->
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-muted">Departments</h5>
+                        <div class="metric-value d-inline-block">
+                            <h1 class="mb-1">{{ depts }}</h1>
+                        </div>
+                        
+                    </div>
+                    <!-- <div id="sparkline-revenue2"></div> -->
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-muted">Salary Groups</h5>
+                        <div class="metric-value d-inline-block">
+                            <h1 class="mb-1">{{ sgs }}</h1>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-muted">Users</h5>
+                        <div class="metric-value d-inline-block">
+                            <h1 class="mb-1">{{ users }}</h1>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+
+                {% include 'includes/_alert.html' %}
+
+                {% if role == 0 %}
+                    <button type="button" data-toggle="modal" data-target="#exampleModal3" class="btn btn-md btn-primary mb-4">Add new user</button>
+                {% endif %}
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add user</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/dashboard" method="POST">
+                                
+                                <div class="form-group">
+                                    <label for="">First Name</label>
+                                    <input type="text" name="fname" class="form-control" autocomplete="off" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Last Name</label>
+                                    <input type="text" name="lname" class="form-control" autocomplete="off" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Email</label>
+                                    <input type="text" name="email" class="form-control" autocomplete="off" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Password</label>
+                                    <input type="password" name="password" class="form-control" autocomplete="off" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Role</label>
+                                    <select name="role" class="form-control" required>
+                                        <option>select role</option>
+                                        <option value="0">Admin</option>
+                                        <option value="1">User</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-sm btn-success">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- ============================================================== -->
+      
+            <!-- ============================================================== -->
+
+                          <!-- recent orders  -->
+            <!-- ============================================================== -->
+            <div class="col-xl-9 col-lg-12 col-md-6 col-sm-12 col-12">
+                <div class="card">
+                    <h5 class="card-header">Users</h5>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="bg-light">
+                                    <tr class="border-0">
+                                        <th class="border-0">#</th>
+                                        <th class="border-0">Username</th>
+                                        <th class="border-0">First Name</th>
+                                        <th class="border-0">Last Name</th>
+                                        <th class="border-0">Email</th>
+                                        <th class="border-0">Role</th>
+                                        <th class="border-0">Status</th>
+                                        <!-- <th class="border-0">deactivate</th> -->
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in allusers %}
+
+                                        <tr>
+                                            <td>{{ user.id }}</td>
+                                            <td>{{ user.username }} </td>
+                                            <td>{{ user.first_name }}</td>
+                                            <td>{{ user.last_name }}</td>
+                                            <td>{{ user.email }}</td>
+                                            {% if user.role == 0 %}
+                                                <td class="text-warning">Admin</td>
+                                            {% else %}
+                                                <td class="text-secondary">User</td>
+                                            {% endif %}
+
+
+                                            {% if user.active == True %}
+                                                <td class="text-success">Active</td>
+                                            {% else %}
+                                                <td class="text-danger">Inactive</td>
+                                            {% endif %}
+                                            <td>
+                                                <!-- <button class="btn btn-sm btn-danger">deactivate</button> -->
+                                            </td>
+                                        </tr>
+                                   {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end recent orders  -->
+
+
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- customer acquistion  -->
+            <!-- ============================================================== -->
+            <!-- <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="card">
+                    <h5 class="card-header">Customer Acquisition</h5>
+                    <div class="card-body">
+                        <div class="ct-chart ct-golden-section" style="height: 354px;"></div>
+                        <div class="text-center">
+                            <span class="legend-item mr-2">
+                                    <span class="fa-xs text-primary mr-1 legend-tile"><i class="fa fa-fw fa-square-full"></i></span>
+                            <span class="legend-text">Returning</span>
+                            </span>
+                            <span class="legend-item mr-2">
+
+                                    <span class="fa-xs text-secondary mr-1 legend-tile"><i class="fa fa-fw fa-square-full"></i></span>
+                            <span class="legend-text">First Time</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- ============================================================== -->
+            <!-- end customer acquistion  -->
+            <!-- ============================================================== -->
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+{% endblock %}
