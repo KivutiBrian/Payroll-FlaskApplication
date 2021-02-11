@@ -34,7 +34,7 @@ def login_required(f): #define a function whose first parameter is f, which is c
         if 'logged_in' in session:
             return f(*args, **kwargs)
         else:
-            flash('Unauthorized! Please log in','danger')
+            flash('Sign in required','danger')
             return redirect(url_for('login', next=request.url))
     return wrap
 
